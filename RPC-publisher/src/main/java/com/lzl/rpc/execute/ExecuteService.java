@@ -43,9 +43,10 @@ public class ExecuteService
                         String method = (String)ois.readUTF();
                         Person person=(Person)ois.readObject();
                         ApplicationContext context=LZLApplicationContextAware.getApplicationContext();
-                        QueryPersonnelInfoImpl impl=(QueryPersonnelInfoImpl)context.getBean(serviceImpl);
-                        Method method2=impl.getClass().getMethod(method,Person.class);
-                        String result =(String)method2.invoke(impl.getClass().newInstance(), person);
+//                        QueryPersonnelInfoImpl impl=(QueryPersonnelInfoImpl)context.getBean(serviceImpl);
+//                        Method method2=impl.getClass().getMethod(method,Person.class);
+//                        String result =(String)method2.invoke(impl.getClass().newInstance(), person);
+                        String result = (String)context.getBean(serviceImpl).getClass().getMethod(method, Person.class).invoke(context.getBean(serviceImpl).getClass().newInstance(), person);
                         outputStream=socket.getOutputStream();
                         oos =new ObjectOutputStream(outputStream);
                         oos.writeObject(result);
